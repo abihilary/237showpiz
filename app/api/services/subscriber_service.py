@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-import json, os
+import json
+import os
 from typing import List
+
 from app.api.models.subscriber import Subscriber
 
 SUBSCRIBER_FILE = "subscribers.json"

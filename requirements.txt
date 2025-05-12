@@ -1,4 +1,6 @@
 fastapi
 uvicorn
 email-validator
+pydantic[email]
+
 

@@ -50,6 +50,8 @@ def get_comments_by_subscriber(subscriber_id: str) -> List[Comment]:
 def add_comment(comment: Comment):
     data = load_comments_file()
     subscriber_comments = data.get(comment.subscriber_id, [])
+    # Increment comment count
+    comment.comment_count = len(subscriber_comments) + 1
     subscriber_comments.append(comment.dict())
     data[comment.subscriber_id] = subscriber_comments
     save_comments_file(data)
@@ -59,6 +61,8 @@ def add_comments_batch(comments: List[Comment]):
     data = load_comments_file()
     for comment in comments:
         subscriber_comments = data.get(comment.subscriber_id, [])
+        comment.comment_count = len(subscriber_comments) + 1
         subscriber_comments.append(comment.dict())
         data[comment.subscriber_id] = subscriber_comments
     save_comments_file(data)
+
