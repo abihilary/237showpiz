@@ -16,16 +16,21 @@ def get_all_comments():
     return comment_service.load_all_comments()
 
 
-@router.post("/")
+@router.post("/", response_model=Comment)
 def post_comment(comment: Comment):
     # Ensure subscriber exists
     if not subscriber_service.get_subscriber_by_id(comment.subscriber_id):
         raise HTTPException(status_code=404, detail="Subscriber not found")
 
-    comment = Comment(
-        text=comment.text,
-        subscriber_id=comment.subscriber_id,
-    )
+    # Auto-fill fields if needed
+    comment.timestamp = comment.timestamp or datetime.utcnow()
+    comment.comment_count = comment.comment_count or 1
+
+    # Save to database or service
+    comment_service.add_comment(comment)
+
+    # Return the full comment back to the client
+    return comment
 
     comment_service.add_comment(comment)
     return {"message": "Comment added successfully."}
