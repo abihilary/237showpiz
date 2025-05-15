@@ -6,7 +6,7 @@ from app.api.services import comment_service, subscriber_service
 from datetime import datetime
 from typing import List, Dict
 
-from app.api.services.comment_service import get_subscriber_name
+from app.api.services.comment_service import get_subscriber_name, get_comments_by_post_id
 
 router = APIRouter()
 
@@ -14,6 +14,11 @@ router = APIRouter()
 @router.get("/", response_model=List[Comment])
 def get_all_comments():
     return comment_service.load_all_comments()
+
+
+@router.get("/comments/{post_id}", response_model=List[Comment])
+def get_comments(post_id: str):
+    return get_comments_by_post_id(post_id)
 
 
 @router.post("/", response_model=Comment)

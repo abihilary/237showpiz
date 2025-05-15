@@ -66,3 +66,7 @@ def add_comments_batch(comments: List[Comment]):
         data[comment.subscriber_id] = subscriber_comments
     save_comments_file(data)
 
+
+def get_comments_by_post_id(post_id: str) -> List[Comment]:
+    all_comments = load_all_comments()
+    return [comment for comment in all_comments if comment.post_id == post_id]
