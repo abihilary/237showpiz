@@ -16,9 +16,10 @@ def get_all_comments():
     return comment_service.load_all_comments()
 
 
-@router.get("/comments/{post_id}", response_model=List[Comment])
-def get_comments(post_id: str):
-    return get_comments_by_post_id(post_id)
+@router.get("/comments/{post_id}")
+def fetch_comments(post_id: str):
+    comments = get_comments_by_post_id(post_id)
+    return {"count": len(comments), "data": [comment.dict() for comment in comments]}
 
 
 @router.post("/", response_model=Comment)

@@ -69,4 +69,6 @@ def add_comments_batch(comments: List[Comment]):
 
 def get_comments_by_post_id(post_id: str) -> List[Comment]:
     all_comments = load_all_comments()
-    return [comment for comment in all_comments if comment.post_id == post_id]
+    filtered_comments = [comment for comment in all_comments if comment.post_id == post_id]
+
+    return filtered_comments
